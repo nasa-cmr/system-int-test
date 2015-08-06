@@ -122,20 +122,17 @@
 
 (deftest search-all-revisions-error-cases
   (testing "collection search with all_revisions bad value"
-    (let [{:keys [status errors]} (search/get-search-failure-data
-                                    (search/find-refs :collection {:all-revisions "foo"}))]
+    (let [{:keys [status errors]} (search/find-refs :collection {:all-revisions "foo"})]
       (is (= [400 ["Parameter all_revisions must take value of true, false, or unset, but was [foo]"]]
              [status errors]))))
   (testing "granule search with all_revisions parameter is not supported"
-    (let [{:keys [status errors]} (search/get-search-failure-data
-                                    (search/find-refs :granule {:provider-id "PROV1"
-                                                                :all-revisions false}))]
+    (let [{:keys [status errors]} (search/find-refs :granule {:provider-id "PROV1"
+                                                              :all-revisions false})]
       (is (= [400 ["Parameter [all_revisions] was not recognized."]]
              [status errors]))))
   (testing "granule search with all_revisions bad value"
-    (let [{:keys [status errors]} (search/get-search-failure-data
-                                    (search/find-refs :granule {:provider-id "PROV1"
-                                                                :all-revisions "foo"}))]
+    (let [{:keys [status errors]} (search/find-refs :granule {:provider-id "PROV1"
+                                                              :all-revisions "foo"})]
       (is (= [400 ["Parameter [all_revisions] was not recognized."
                    "Parameter all_revisions must take value of true, false, or unset, but was [foo]"]]
              [status errors])))))
